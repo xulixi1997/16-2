@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="河北靓码网络科技有限公司专业提供高端网站开发、移动端应用、企业管理系统定制及电商平台搭建服务。位于湖北咸宁，服务全国。">
+    <title>河北靓码网络科技有限公司 - 以代码驱动商业进化</title>
+    <style>
+        /* --- 核心变量与重置 --- */
+        :root {
+            --bg-body: #0B1121; /* 更深的午夜蓝 */
+            --bg-card: rgba(30, 41, 59, 0.7); /* 半透明卡片 */
+            --bg-card-hover: rgba(51, 65, 85, 0.8);
+            --primary: #a855f7; /* 紫色调整 */
+            --secondary: #0ea5e9; /* 亮蓝调整 */
+            --accent: #f43f5e;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --container-width: 1240px;
+            --radius: 16px;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --glow-shadow: 0 0 30px rgba(168, 85, 247, 0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-body);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(168, 85, 247, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(14, 165, 233, 0.08) 0%, transparent 25%);
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+        img { max-width: 100%; height: auto; display: block; border-radius: var(--radius); }
+
+        /* --- 工具类 --- */
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        .section-padding { padding: 100px 0; }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, var(--text-main) 30%, var(--secondary), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 8px 20px -5px rgba(168, 85, 247, 0.5);
+            border: none;
+        }
+
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 25px -5px rgba(168, 85, 247, 0.7); }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid rgba(148, 163, 184, 0.3);
+            color: var(--text-main);
+        }
+        .btn-outline:hover { border-color: var(--secondary); color: var(--text-main); background: rgba(14, 165, 233, 0.1); }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+        .section-title .sub-label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        .section-title h2 {
+            font-size: 2.75rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+        .section-title p { color: var(--text-muted); max-width: 650px; margin: 0 auto; font-size: 1.1rem; }
+
+        /* 图片霓虹效果容器 */
+        .img-glow-container {
+            position: relative;
+            border-radius: var(--radius);
+            padding: 4px; /* 边框宽度 */
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.5), rgba(168, 85, 247, 0.5));
+            box-shadow: var(--glow-shadow);
+        }
+        .img-glow-container img {
+            background: var(--bg-body);
+            position: relative;
+            z-index: 2;
+            border-radius: calc(var(--radius) - 4px);
+            /* 增加一点图片滤镜让它更融入深色背景 */
+            filter: brightness(0.9) contrast(1.1);
+        }
+
+
+        /* --- 1. 导航栏 --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(11, 17, 33, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            transition: var(--transition);
+        }
+        header.scrolled { padding: 10px 0; background: rgba(11, 17, 33, 0.95); }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo { font-size: 1.6rem; font-weight: 900; letter-spacing: -0.5px; display: flex; align-items: center; }
+        .logo-mark { 
+            width: 30px; height: 30px; 
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            border-radius: 8px; margin-right: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; color: white;
+        }
+
+        .nav-links { display: flex; gap: 35px; }
+        .nav-links a { font-size: 0.95rem; font-weight: 500; color: var(--text-muted); position: relative; }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px;
+            background: var(--secondary); transition: var(--transition);
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--text-main); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+        /* --- 2. Hero 区域 --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 80px;
+            overflow: hidden;
+        }
+        .hero-bg-glow {
+            position: absolute;
+            top: -20%; right: -10%;
+            width: 60%; height: 60%;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            opacity: 0.15; filter: blur(120px); z-index: 0;
+        }
+
+        .hero-content {
+            max-width: 850px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            line-height: 1.15;
+            margin-bottom: 25px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 45px;
+            max-width: 650px;
+        }
+
+        /* --- 3. 数据概览 --- */
+        .stats-bar {
+            background: rgba(255,255,255,0.02);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 50px 0;
+            position: relative;
+            z-index: 2;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            text-align: center;
+        }
+        .stat-item h3 { font-size: 3rem; font-weight: 800; color: transparent; -webkit-text-stroke: 1px var(--secondary); margin-bottom: 10px; }
+        .stat-item p { color: var(--text-muted); font-size: 0.9rem; font-weight: 600; letter-spacing: 1px; }
+
+        /* --- 4. 关于我们 --- */
+        .about-section { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; }
+        .about-text .sub-label { color: var(--primary); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; display: block; margin-bottom: 15px; }
+        .about-text h2 { font-size: 2.75rem; margin-bottom: 25px; line-height: 1.2; }
+        .about-text p { color: var(--text-muted); margin-bottom: 25px; font-size: 1.05rem; }
+        .about-image-wrapper {
+            position: relative;
+        }
+        .code-editor-mockup {
+            background: #1e1e1e;
+            border-radius: var(--radius);
+            border: 1px solid #333;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .editor-header {
+            background: #252526; padding: 10px 15px; display: flex; gap: 8px;
+        }
+        .editor-dot { width: 12px; height: 12px; border-radius: 50%; background: #ff5f56; }
+        .editor-dot:nth-child(2) { background: #ffbd2e; }
+        .editor-dot:nth-child(3) { background: #27c93f; }
+        .code-content {
+            padding: 25px;
+            font-family: 'Fira Code', monospace;
+            color: #d4d4d4;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        .code-keyword { color: #c586c0; }
+        .code-string { color: #ce9178; }
+        .code-func { color: #dcdcaa; }
+
+        /* --- 5. 核心服务 (Grid) --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+        .service-card {
+            background: var(--bg-card);
+            padding: 45px 35px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        .service-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(14, 165, 233, 0.1));
+            opacity: 0; transition: var(--transition); z-index: -1;
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(168, 85, 247, 0.3);
+            box-shadow: var(--glow-shadow);
+        }
+        .service-card:hover::before { opacity: 1; }
+        .service-icon {
+            width: 60px; height: 60px;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(14, 165, 233, 0.2));
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.8rem; margin-bottom: 25px; color: var(--text-main);
+        }
+        .service-card h3 { margin-bottom: 15px; font-size: 1.35rem; }
+        .service-card p { color: var(--text-muted); font-size: 1rem; }
+
+        /* --- 6. 技术栈滚动 --- */
+        .tech-stack { background: rgba(0,0,0,0.2); overflow: hidden; white-space: nowrap; padding: 40px 0; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .tech-track { display: inline-block; animation: scroll 25s linear infinite; }
+        .tech-item { display: inline-flex; align-items: center; margin: 0 50px; font-weight: 700; color: var(--text-muted); font-size: 1.5rem; transition: var(--transition); }
+        .tech-item:hover { color: var(--secondary); text-shadow: 0 0 15px rgba(14, 165, 233, 0.5); }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* --- 7-9. 深度解决方案板块 (交替布局) --- */
+        .solution-block {
+            display: flex;
+            align-items: center;
+            gap: 80px;
+            margin-bottom: 120px;
+        }
+        .solution-block.reverse { flex-direction: row-reverse; }
+        .solution-content { flex: 1; }
+        .solution-visual { flex: 1; }
+
+        .tag {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(14, 165, 233, 0.15);
+            color: var(--secondary);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            border-radius: 30px;
+            font-size: 0.85rem; font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .solution-content h2 { font-size: 2.25rem; margin-bottom: 25px; }
+        .solution-content p { color: var(--text-muted); font-size: 1.05rem; margin-bottom: 20px; }
+        .solution-list { margin-top: 30px; }
+        .solution-list li { display: flex; align-items: center; margin-bottom: 15px; color: var(--text-main); }
+        .solution-list li i { color: var(--primary); margin-right: 10px; }
+
+        /* --- 10. 开发流程 --- */
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 30px;
+            position: relative;
+            margin-top: 60px;
+        }
+        .step { text-align: center; position: relative; z-index: 2; }
+        .step-icon-box {
+            width: 90px; height: 90px;
+            background: var(--bg-card);
+            border: 2px solid rgba(168, 85, 247, 0.3);
+            border-radius: 20px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem;
+            transition: var(--transition);
+            position: relative;
+        }
+        .step:hover .step-icon-box {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.4);
+            transform: translateY(-5px);
+        }
+        .process-line {
+            position: absolute;
+            top: 45px;
+            left: 10%; right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(168, 85, 247, 0.1), var(--secondary), rgba(168, 85, 247, 0.1));
+            z-index: 1;
+        }
+        .step h4 { font-size: 1.2rem; margin-bottom: 10px; }
+        .step p { font-size: 0.9rem; color: var(--text-muted); }
+
+        /* --- 11. 案例作品 --- */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 30px;
+        }
+        .portfolio-item {
+            border-radius: var(--radius);
+            position: relative;
+            overflow: hidden;
+            group: hover;
+            cursor: pointer;
+            box-shadow: var(--glow-shadow);
+            height: 300px; /* 固定高度 */
+        }
+        .portfolio-item img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: brightness(0.8); /* 稍微压暗图片以突出文字 */
+        }
+        .portfolio-overlay {
+            position: absolute;
+            bottom: 0; left: 0; width: 100%;
+            padding: 30px;
+            background: linear-gradient(to top, rgba(11, 17, 33, 0.95), rgba(11, 17, 33, 0.6), transparent);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition);
+        }
+        .portfolio-item:hover img { transform: scale(1.05); filter: brightness(1); }
+        .portfolio-item:hover .portfolio-overlay { transform: translateY(0); opacity: 1; }
+        .portfolio-overlay h4 { font-size: 1.4rem; margin-bottom: 8px; }
+        .portfolio-overlay p { color: var(--secondary); font-size: 0.9rem; font-weight: 600; }
+
+        /* --- 12. 为什么选择我们 --- */
+        .features-box {
+            background: linear-gradient(180deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8));
+            border-radius: 24px;
+            padding: 70px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            border: 1px solid rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+        }
+        .feature-point h4 { font-size: 1.3rem; margin-bottom: 15px; display: flex; align-items: center; }
+        .feature-point h4 i { font-size: 1.5rem; margin-right: 12px; }
+        .feature-point p { font-size: 1rem; color: var(--text-muted); line-height: 1.8; }
+
+        /* --- 13. FAQ --- */
+        .faq-container { max-width: 800px; margin: 0 auto; }
+        .faq-item {
+            background: var(--bg-card);
+            margin-bottom: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .faq-item.active { border-color: var(--secondary); box-shadow: var(--glow-shadow); }
+        .faq-q {
+            padding: 20px 25px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        .faq-toggle { font-size: 1.5rem; color: var(--secondary); transition: var(--transition); }
+        .faq-item.active .faq-toggle { transform: rotate(45deg); color: var(--accent); }
+        .faq-a {
+            padding: 0 25px 25px;
+            color: var(--text-muted);
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        .faq-item.active .faq-a { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- 14. CTA Banner --- */
+        .cta-section {
+            background: linear-gradient(135deg, #4c1d95, #3b82f6);
+            border-radius: 24px;
+            text-align: center;
+            padding: 80px 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-section::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
+            animation: rotate 20s linear infinite;
+        }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .cta-content { position: relative; z-index: 2; }
+        .cta-content h2 { color: white; margin-bottom: 20px; font-size: 2.5rem; }
+        .cta-content p { color: rgba(255,255,255,0.9); margin-bottom: 35px; font-size: 1.15rem; }
+
+        /* --- 15. 联系我们 --- */
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 60px;
+        }
+        .contact-info-card {
+            background: var(--bg-card);
+            padding: 50px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .info-row { margin-bottom: 30px; }
+        .info-label { color: var(--secondary); font-size: 0.85rem; margin-bottom: 8px; display: block; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+        .info-value { font-size: 1.15rem; font-weight: 500; }
+        .contact-form {
+            background: var(--bg-card);
+            padding: 50px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .form-group { margin-bottom: 25px; }
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 18px;
+            background: rgba(0,0,0,0.3);
+            border: 2px solid rgba(255,255,255,0.08);
+            color: white;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        .contact-form input:focus, .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 15px rgba(14, 165, 233, 0.3);
+        }
+
+        /* --- 16. Footer --- */
+        footer {
+            background: #020617;
+            padding: 80px 0 30px;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 60px;
+        }
+        .footer-about p { margin-top: 20px; line-height: 1.8; max-width: 350px; }
+        .footer-links h4 { color: white; margin-bottom: 25px; font-size: 1.1rem; }
+        .footer-links ul li { margin-bottom: 15px; }
+        .footer-links ul li a:hover { color: var(--secondary); }
+        .footer-bottom { text-align: center; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem; }
+
+        /* Mobile Adaption */
+        @media (max-width: 992px) {
+            .hero h1 { font-size: 3.5rem; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .about-section, .solution-block, .solution-block.reverse, .contact-wrapper, .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .solution-block.reverse { flex-direction: column; }
+            .solution-visual { order: -1; }
+            .process-steps { grid-template-columns: repeat(3, 1fr); }
+            .process-line { display: none; }
+            .features-box { grid-template-columns: 1fr; padding: 40px; }
+            .solution-visual img { height: auto; max-height: 400px; width: 100%; object-fit: cover; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; } /* 暂时隐藏，实际项目需换成汉堡菜单 */
+            .hero { padding-top: 120px; text-align: center; }
+            .hero h1 { font-size: 2.8rem; }
+            .hero-content { margin: 0 auto; }
+            .hero-btns { justify-content: center; }
+            .section-title h2 { font-size: 2rem; }
+            .process-steps { grid-template-columns: 1fr; }
+            .contact-form .grid-2 { grid-template-columns: 1fr; }
+            .portfolio-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <div class="logo-mark">靓</div>
+                    靓码科技
+                </div>
+                <div class="nav-links">
+                    <a href="#home" class="active">首页</a>
+                    <a href="#services">核心服务</a>
+                    <a href="#solutions">解决方案</a>
+                    <a href="#portfolio">精选案例</a>
+                    <a href="#contact">联系我们</a>
+                </div>
+                <a href="tel:15235137662" class="btn btn-primary">
+                    <span>立即咨询</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-bg-glow"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="text-gradient">以代码驱动商业进化<br>重塑数字未来</h1>
+                <p>河北靓码网络科技有限公司，专注于为您打造卓越的数字化体验。从战略咨询到技术落地，我们用像素级的精细与银行级的安全，连接您的创意与亿万用户。扎根湖北嘉鱼，服务辐射全国。</p>
+                <div class="hero-btns" style="display: flex; gap: 20px;">
+                    <a href="#contact" class="btn btn-primary">启动您的项目</a>
+                    <a href="#portfolio" class="btn btn-outline">浏览成功案例</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-bar">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>500+</h3>
+                    <p>数字化项目交付</p>
+                </div>
+                <div class="stat-item">
+                    <h3>99%</h3>
+                    <p>客户终身续约率</p>
+                </div>
+                <div class="stat-item">
+                    <h3>15+</h3>
+                    <p>涉及行业领域</p>
+                </div>
+                <div class="stat-item">
+                    <h3>24/7</h3>
+                    <p>全天候技术响应</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding" id="about">
+        <div class="container">
+            <div class="about-section">
+                <div class="about-text">
+                    <span class="sub-label">关于靓码科技</span>
+                    <h2>我们不只是写代码，<br>更是商业逻辑的翻译官。</h2>
+                    <p>靓码科技不仅仅是一家技术开发公司，我们是您可信赖的数字化转型合作伙伴。我们深知，成功的数字产品不仅需要稳健的代码，更需要对商业模式的深刻理解和对用户体验的极致追求。</p>
+                    <p>无论您是初创企业需要构建 MVP，还是大型集团需要重构核心系统，我们位于湖北嘉鱼的技术中心都能通过高效的云端协作模式，为您提供一线城市的交付标准。</p>
+                    <div style="margin-top: 30px; display: flex; gap: 15px; flex-wrap: wrap;">
+                        <span class="tag">✓ 全栈技术团队</span>
+                        <span class="tag">✓ 敏捷开发流程</span>
+                        <span class="tag">✓ 源代码完全交付</span>
+                    </div>
+                </div>
+                <div class="about-image-wrapper">
+                    <div class="code-editor-mockup">
+                        <div class="editor-header">
+                            <div class="editor-dot"></div><div class="editor-dot"></div><div class="editor-dot"></div>
+                        </div>
+                        <div class="code-content">
+                            <span class="code-keyword">const</span> LiangMaTech = {<br>
+                            &nbsp;&nbsp;mission: <span class="code-string">"Empower Business Digitally"</span>,<br>
+                            &nbsp;&nbsp;location: <span class="code-string">"Hebei & Hubei Base"</span>,<br>
+                            &nbsp;&nbsp;expertise: [<span class="code-string">"Web3"</span>, <span class="code-string">"SaaS"</span>, <span class="code-string">"Mobile"</span>],<br>
+                            &nbsp;&nbsp;drive: <span class="code-keyword">function</span>() {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-func">innovate</span>(<span class="code-keyword">this</span>.expertise);<br>
+                            &nbsp;&nbsp;}<br>
+                            };<br>
+                            <br>
+                            <span class="code-func">console</span>.log(LiangMaTech.<span class="code-func">drive</span>()); <span class="code-comment">// Output: Future Created.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="section-padding">
+        <div class="container">
+            <div class="section-title">
+                <span class="sub-label">我们的专长</span>
+                <h2>全周期数字化服务体系</h2>
+                <p>覆盖从需求分析、交互设计、系统开发到运维推广的全生命周期服务，确保您的数字化战略平稳落地。</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🌐</div>
+                    <h3>高端网站/门户定制</h3>
+                    <p>拒绝模板。基于 HTML5+CSS3 打造响应式、利于 SEO 的品牌官网与集团门户，适配所有终端设备。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📱</div>
+                    <h3>移动端与小程序开发</h3>
+                    <p>深耕微信、支付宝生态，开发原生 APP 及跨平台小程序，帮您抢占移动互联网流量高地。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">⚙️</div>
+                    <h3>企业级 SaaS 系统定制</h3>
+                    <p>量身定制 OA、CRM、ERP 等业务管理系统，解决标准软件无法满足的个性化管理痛点。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🛍️</div>
+                    <h3>新零售电商平台搭建</h3>
+                    <p>构建高并发、安全稳定的 B2B2C 商城系统，支持复杂营销裂变、多渠道支付与会员管理。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🎨</div>
+                    <h3>UI/UE 交互设计</h3>
+                    <p>基于用户行为数据分析的界面设计，用令人惊艳的视觉语言提升用户留存与转化率。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">☁️</div>
+                    <h3>云服务与安全运维</h3>
+                    <p>提供高性能服务器架构部署、数据灾备、DDoS 防御及 7x24 小时故障紧急响应服务。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tech-stack">
+        <div class="tech-track">
+            <span class="tech-item">Vue.js</span><span class="tech-item">React Native</span><span class="tech-item">Python Django</span>
+            <span class="tech-item">Spring Boot</span><span class="tech-item">Node.js</span><span class="tech-item">Flutter</span>
+            <span class="tech-item">Docker K8s</span><span class="tech-item">MySQL</span><span class="tech-item">Redis</span>
+            <span class="tech-item">GraphQL</span><span class="tech-item">TypeScript</span><span class="tech-item">AWS/阿里云</span>
+            <span class="tech-item">Vue.js</span><span class="tech-item">React Native</span><span class="tech-item">Python Django</span>
+            <span class="tech-item">Spring Boot</span><span class="tech-item">Node.js</span>
+        </div>
+    </section>
+
+    <section id="solutions" class="section-padding">
+        <div class="container">
+            <div class="solution-block">
+                <div class="solution-visual img-glow-container">
+                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop" alt="现代企业办公环境与数字化展示">
+                </div>
+                <div class="solution-content">
+                    <span class="tag">品牌数字化形象升级</span>
+                    <h2>下一代企业门户解决方案</h2>
+                    <p>您的网站是您在数字世界的“总部大楼”。我们通过沉浸式的视觉设计和流畅的交互动效，帮助企业在激烈的市场竞争中建立独特的品牌辨识度。这不仅仅是展示，更是建立信任的开始。</p>
+                    <ul class="solution-list">
+                        <li><i>💎</i> 3D可视化 / WebGL 高端交互展示</li>
+                        <li><i>🚀</i> 极致的加载速度优化与全球 CDN 加速</li>
+                        <li><i>📱</i> 完美适配各种尺寸屏幕的响应式设计</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding" style="padding-top:0;">
+        <div class="container">
+            <div class="solution-block reverse">
+                <div class="solution-visual img-glow-container">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop" alt="大数据可视化监控大屏">
+                </div>
+                <div class="solution-content">
+                    <span class="tag">数据驱动决策</span>
+                    <h2>新零售电商数据中台</h2>
+                    <p>打通线上商城、线下门店与仓储物流数据，构建统一的会员视图。通过实时数据大屏，让管理者对销售动态、库存预警和用户画像了如指掌，实现精准营销与高效运营。</p>
+                    <ul class="solution-list">
+                        <li><i>📊</i> 实时交易数据可视化大屏驾驶舱</li>
+                        <li><i>🔗</i> 全渠道会员与订单统一管理系统</li>
+                        <li><i>⚡</i> 支持秒杀、拼团的高并发交易引擎</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding" style="padding-top:0;">
+        <div class="container">
+            <div class="solution-block">
+                <div class="solution-visual img-glow-container">
+                    <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?q=80&w=1200&auto=format&fit=crop" alt="工程师操作后台管理系统">
+                </div>
+                <div class="solution-content">
+                    <span class="tag">企业降本增效</span>
+                    <h2>复杂业务系统深度定制</h2>
+                    <p>针对特殊行业需求，从零构建业务逻辑。我们拒绝生搬硬套的模板，深入理解您的业务流程，开发完全贴合实际操作习惯的管理系统，彻底解决“卡脖子”的信息化痛点。</p>
+                    <ul class="solution-list">
+                        <li><i>🔧</i> 高度可配置的工作流引擎</li>
+                        <li><i>🛡️</i> 银行级的RBAC权限与数据安全体系</li>
+                        <li><i>🔌</i> 开放 API 接口，轻松对接第三方系统</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding" style="background: rgba(255,255,255,0.02);">
+        <div class="container">
+            <div class="section-title">
+                <span class="sub-label">合作模式</span>
+                <h2>透明高效的交付流程</h2>
+                <p>标准化的项目管理体系，确保每个节点清晰可控，按时按质交付。</p>
+            </div>
+            <div class="process-steps">
+                <div class="process-line"></div>
+                <div class="step">
+                    <div class="step-icon-box">💡</div>
+                    <h4>01. 需求洞察</h4>
+                    <p>深度沟通，梳理业务逻辑与功能清单</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon-box">📐</div>
+                    <h4>02. 交互设计</h4>
+                    <p>输出高保真 UI 设计图与交互原型</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon-box">💻</div>
+                    <h4>03. 敏捷开发</h4>
+                    <p>前后端编码实现，定期汇报进度</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon-box">🧪</div>
+                    <h4>04. 测试验收</h4>
+                    <p>全面的功能测试、压力测试与安全扫描</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon-box">🚀</div>
+                    <h4>05. 上线运维</h4>
+                    <p>服务器部署，提供长期技术支持保障</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="section-padding">
+        <div class="container">
+            <div class="section-title">
+                <span class="sub-label">成功足迹</span>
+                <h2>精选客户案例</h2>
+                <p>我们为不同行业的客户提供了创造性的解决方案。以下是我们的一些代表作。</p>
+            </div>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=800&auto=format&fit=crop" alt="智慧物流货运集装箱与港口">
+                    <div class="portfolio-overlay">
+                        <h4>某跨国物流集团调度指挥系统</h4>
+                        <p>大数据可视化 / GIS路径规划 / 车辆实时追踪</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://images.unsplash.com/photo-1559526324-593bc073d938?q=80&w=800&auto=format&fit=crop" alt="用户在咖啡店使用手机支付点单">
+                    <div class="portfolio-overlay">
+                        <h4>知名连锁咖啡品牌点单小程序</h4>
+                        <p>微信小程序 / 会员积分体系 / 营销裂变工具</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop" alt="高端现代建筑外观">
+                    <div class="portfolio-overlay">
+                        <h4>百强地产集团品牌形象官网</h4>
+                        <p>响应式设计 / VR全景看房 / 动态交互体验</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=800&auto=format&fit=crop" alt="医生使用平板电脑查看医疗数据">
+                    <div class="portfolio-overlay">
+                        <h4>区域医疗联合体信息管理SaaS</h4>
+                        <p>多租户架构 / 数据互联互通 / 电子病历管理</p>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="#contact" class="btn btn-outline">索取更多行业案例集</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding">
+        <div class="container">
+            <div class="features-box">
+                <div class="feature-point">
+                    <h4 style="color:var(--secondary);"><i>⚡</i> 极速响应机制</h4>
+                    <p>我们承诺工作时间 1 小时内响应客户需求，重大故障 30 分钟内介入处理。高效沟通，拒绝推诿。</p>
+                </div>
+                <div class="feature-point">
+                    <h4 style="color:var(--primary);"><i>🔓</i> 源代码完全交付</h4>
+                    <p>项目结项后，我们提供完整的源代码、数据库设计文档和部署说明。数据与系统完全属于您，不绑定客户。</p>
+                </div>
+                <div class="feature-point">
+                    <h4 style="color:var(--accent);"><i>🛡️</i> 终身技术保障</h4>
+                    <p>提供长达一年的免费质保期，并承诺提供终身的基础技术咨询服务，做您坚实的技术后盾。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding" style="background: rgba(255,255,255,0.01);">
+        <div class="container">
+            <div class="section-title">
+                <span class="sub-label">疑难解答</span>
+                <h2>常见问题 (FAQ)</h2>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item active">
+                    <div class="faq-q">开发一个定制化项目通常需要多少预算？ <span class="faq-toggle">+</span></div>
+                    <div class="faq-a">
+                        <p>定制开发的价格取决于功能复杂度和设计要求。一般来说，企业展示型网站在几千到一万多元不等，而复杂的业务系统或电商平台则可能需要几万甚至更高。我们建议您先与我们沟通具体需求，我们将为您提供详细、透明的报价方案。</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">你们的开发周期一般是多久？ <span class="faq-toggle">+</span></div>
+                    <div class="faq-a">
+                        <p>开发周期同样取决于项目规模。简单的展示项目通常在 2-4 周内完成；中等规模的小程序或系统可能需要 1-2 个月；大型复杂平台则需根据阶段划分。我们在项目启动时会提供详细的时间进度表。</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q">你们在湖北嘉鱼，我们在外地，沟通方便吗？ <span class="faq-toggle">+</span></div>
+                    <div class="faq-a">
+                        <p>非常方便。我们拥有成熟的远程协作经验，服务过全国各地的客户。我们通过腾讯会议、企业微信、项目管理工具（如 Jira/PingCode）保持高频、高效的沟通，确保信息同步，体验与本地服务无异。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container section-padding" style="padding-bottom: 0;">
+        <div class="cta-section">
+            <div class="cta-content">
+                <h2>准备好开启您的数字化转型之旅了吗？</h2>
+                <p>无论您的想法是疯狂还是务实，我们都已准备好用技术将其变为现实。</p>
+                <a href="#contact" class="btn" style="background:white; color:var(--primary); box-shadow: 0 10px 20px rgba(0,0,0,0.2);">
+                    <span>免费获取项目评估与报价</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section-padding">
+        <div class="container">
+            <div class="section-title">
+                <span class="sub-label">取得联系</span>
+                <h2>让我们聊聊您的下一个大项目</h2>
+            </div>
+            <div class="contact-wrapper">
+                <div class="contact-info-card">
+                    <h3>联系方式</h3>
+                    <p style="color:var(--text-muted); margin-bottom: 30px;">期待与您的沟通，我们随时准备为您提供专业的咨询服务。</p>
+                    
+                    <div class="info-row">
+                        <span class="info-label">公司全称</span>
+                        <div class="info-value">河北靓码网络科技有限公司</div>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">24小时服务热线 / 微信</span>
+                        <div class="info-value" style="font-family: monospace; font-size: 1.3rem; color: var(--secondary); font-weight: 700;">15235137662</div>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">项目咨询邮箱</span>
+                        <div class="info-value">dev@xianningfurui.asia</div>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">技术中心地址</span>
+                        <div class="info-value">湖北省咸宁市嘉鱼县鱼岳镇沙阳大道103号46室</div>
+                    </div>
+                </div>
+                
+                <form class="contact-form">
+                    <h3>在线留言</h3>
+                    <p style="color:var(--text-muted); margin-bottom: 30px;">请填写下表，我们的项目经理将在 24 小时内与您联系。</p>
+                    <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <input type="text" placeholder="您的姓名 *" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="联系电话 *" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="公司名称 / 项目类型">
+                    </div>
+                    <div class="form-group">
+                        <textarea rows="5" placeholder="请简要描述您的需求、预算范围或主要功能点... *" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">提交需求</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="logo">
+                        <div class="logo-mark">靓</div>
+                        靓码科技
+                    </div>
+                    <p>专注于技术创新的互联网服务商，致力于为企业提供从咨询、设计、开发到运维的全方位数字化解决方案。以匠心致初心，用代码连接未来。</p>
+                </div>
+                <div class="footer-links">
+                    <h4>核心服务</h4>
+                    <ul>
+                        <li><a href="#services">高端网站建设</a></li>
+                        <li><a href="#services">品牌门户开发</a></li>
+                        <li><a href="#services">企业系统定制</a></li>
+                        <li><a href="#services">移动应用开发</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>快速链接</h4>
+                    <ul>
+                        <li><a href="#about">关于我们</a></li>
+                        <li><a href="#process">合作流程</a></li>
+                        <li><a href="#portfolio">成功案例</a></li>
+                        <li><a href="#contact">联系我们</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 河北靓码网络科技有限公司 All Rights Reserved. | <a href="#" style="color:var(--text-muted);">隐私政策</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 1. 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            header.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // 2. 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // 3. FAQ 折叠面板交互
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            item.querySelector('.faq-q').addEventListener('click', () => {
+                // 关闭其他已打开的项 (可选，如果希望只打开一个)
+                // faqItems.forEach(i => {
+                //    if (i !== item) i.classList.remove('active');
+                // });
+                // 切换当前项
+                item.classList.toggle('active');
+            });
+        });
+
+        // 4. 简单的滚动浮现动画观察器
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                    observer.unobserve(entry.target); // 动画只播放一次
+                }
+            });
+        }, observerOptions);
+
+        // 初始化需要动画的元素
+        const animatedElements = document.querySelectorAll('.service-card, .solution-block, .portfolio-item, .step, .features-box');
+        animatedElements.forEach((el) => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(40px)';
+            el.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
